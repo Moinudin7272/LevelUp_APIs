@@ -3,9 +3,9 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { User } from './user.entity';
 import * as bcrypt from 'bcrypt';
-import { RegisterDto } from 'src/dto/register.dto';
-import { SignInDto } from 'src/dto/signin.dto';
-import { UpdateUserDto } from 'src/dto/update-user.dto';
+import { RegisterDto } from 'src/users/dto/register.dto';
+import { SignInDto } from 'src/users/dto/signin.dto';
+import { UpdateUserDto } from 'src/users/dto/update-user.dto';
 
 @Injectable()
 export class UserService {
@@ -49,5 +49,23 @@ async signIn(data: SignInDto) {
     Object.assign(user, data);
 
     return this.userRepo.save(user);
+  }
+
+  findAll() {
+    return this.userRepo.find();
+  }
+
+  async findOne(id: string) {
+    const user = await this.userRepo.findOne({ where: { id } });
+    if (!user) throw new NotFoundException('User not found');
+    const { password, ...result } = user;
+    return result;
+  }
+
+  async remove(id: string) {
+    const user = await this.userRepo.findOne({ where: { id } });
+    if (!user) throw new NotFoundException('User not found');
+    await this.userRepo.remove(user);
+    return { deleted: true };
   }
 }

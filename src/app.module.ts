@@ -1,7 +1,8 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { User } from './users/user.entity';
 import { UserModule } from './users/user.module';
+import { LookupTypeModule } from './lookup_types/lookup-type.module';
+import { LookupModule } from './lookups/lookup.module';
 
 @Module({
   imports: [
@@ -12,10 +13,13 @@ import { UserModule } from './users/user.module';
       username: 'postgres',
       password: '12345',
       database: 'levelup_db',
-      entities: [User],
-      synchronize: true, // Disable in production
+      autoLoadEntities: true,  // Automatically loads all entities
+      synchronize: true,       // Disable in production
     }),
+    
     UserModule,
+    LookupTypeModule,
+    LookupModule,
   ],
 })
 export class AppModule {}

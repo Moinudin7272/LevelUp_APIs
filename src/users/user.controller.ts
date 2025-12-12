@@ -1,10 +1,10 @@
 import { Controller, Post, Body, Put, Param } from '@nestjs/common';
 import { UserService } from './user.service';
-import { RegisterDto } from 'src/dto/register.dto';
-import { SignInDto } from 'src/dto/signin.dto';
-import { UpdateUserDto } from 'src/dto/update-user.dto';
+import { RegisterDto } from 'src/users/dto/register.dto';
+import { SignInDto } from 'src/users/dto/signin.dto';
+import { UpdateUserDto } from 'src/users/dto/update-user.dto';
 
-@Controller('user')
+@Controller('users')
 export class UserController {
   constructor(private userService: UserService) {}
 
