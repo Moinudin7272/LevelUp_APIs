@@ -7,7 +7,10 @@ import { RegisterDto } from 'src/users/dto/register.dto';
 import { SignInDto } from 'src/users/dto/signin.dto';
 import { UpdateUserDto } from 'src/users/dto/update-user.dto';
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 3c08029363c80623a4025ce9489171a17c4d2e4b
 @Injectable()
 export class UserService {
   constructor(
