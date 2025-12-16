@@ -6,7 +6,7 @@ import { DefaultEntity } from '../common/default.entity';
 @Entity('users')
 export class User extends DefaultEntity {
 
-  @PrimaryGeneratedColumn('uuid')
+  @PrimaryGeneratedColumn()
   id: string;
 
   @Column({ unique: true })

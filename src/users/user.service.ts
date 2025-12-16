@@ -2,7 +2,6 @@ import { Injectable, NotFoundException, UnauthorizedException } from '@nestjs/co
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { User } from './user.entity';
-import * as bcrypt from 'bcrypt';
 import { RegisterDto } from 'src/users/dto/register.dto';
 import { SignInDto } from 'src/users/dto/signin.dto';
 import { UpdateUserDto } from 'src/users/dto/update-user.dto';
@@ -18,11 +17,11 @@ export class UserService {
   ) {}
 
   async register(data: RegisterDto) {
-    const hashedPassword = await bcrypt.hash(data.password, 10);
+   
 
     const user = this.userRepo.create({
       ...data,
-      password: hashedPassword,
+      password: data.password,
     });
 
     return this.userRepo.save(user);
@@ -35,11 +34,9 @@ async signIn(data: SignInDto) {
 
   if (!user) throw new NotFoundException('User not found');
 
-  const match = await bcrypt.compare(data.password, user.password);
+  if (user.password !== data.password)
+    throw new UnauthorizedException('Invalid password');
 
-  if (!match) throw new UnauthorizedException('Invalid password');
-
-  // Exclude password before returning
   const { password, ...result } = user;
   return result;
 }
