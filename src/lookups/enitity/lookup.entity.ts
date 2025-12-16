@@ -9,7 +9,7 @@ import {
 } from 'typeorm';
 import { LookupType } from '../../lookup_types/entity/lookup-type.entity';
 import { DefaultEntity } from '../../common/default.entity';
-
+import { ApiProperty } from '@nestjs/swagger';
 
 @Entity('lookups')
 export class Lookup extends DefaultEntity {

@@ -4,7 +4,7 @@ import {
   Column,
 } from 'typeorm';
 import{ BaseEntity } from 'typeorm';
-
+import { ApiProperty } from '@nestjs/swagger';
 
 export class  DefaultEntity extends BaseEntity {
   @CreateDateColumn({ type: 'timestamp with time zone' })
