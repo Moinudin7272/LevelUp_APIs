@@ -16,16 +16,20 @@ export class UserController {
     const {password, ...result} = dto;
     
 
-   return { "statusCode": HttpStatus.OK, message: responseMessage.FETCH_DATA, data: result };
+   return { "statusCode": HttpStatus.OK, message: responseMessage.REGISTER_SUCCESS, data: result };
   }
 
   @Post('signin')
   signIn(@Body() dto: SignInDto) {
-    return this.userService.signIn(dto);
+     const user = this.userService.signIn(dto);
+     const {password, ...result} = dto;
+    return { "statusCode": HttpStatus.OK, message: responseMessage.LOGIN_SUCCESS, data: result };
   }
 
   @Put('update/:id')
   update(@Param('id') id: string, @Body() dto: UpdateUserDto) {
-    return this.userService.update(id, dto);
+    const user = this.userService.update(id, dto);
+    const {username, ...result} = dto;
+    return { "statusCode": HttpStatus.OK, message: responseMessage.UPDATE_SUCCESS, data: user };
   }
 }

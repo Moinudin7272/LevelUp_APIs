@@ -1,7 +1,7 @@
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn } from 'typeorm';
-
+import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, JoinTable,ManyToMany } from 'typeorm';
+import { ApiProperty } from '@nestjs/swagger';
 import { DefaultEntity } from '../common/default.entity';
-
+import { Role } from 'src/roles/entity/roles.entity';
 
 @Entity('users')
 export class User extends DefaultEntity {
@@ -36,4 +36,19 @@ export class User extends DefaultEntity {
   @Column({ default: 'user' })
   type: string;
 
+  // Many-to-Many with Roles
+  // =========================
+  @ManyToMany(() => Role, (role) => role.users, { cascade: true })
+  @JoinTable({
+    name: 'user_roles',
+    joinColumn: {
+      name: 'user_id',
+      referencedColumnName: 'id',
+    },
+    inverseJoinColumn: {
+      name: 'role_id',
+      referencedColumnName: 'id',
+    },
+  })
+  roles: Role[];
 }

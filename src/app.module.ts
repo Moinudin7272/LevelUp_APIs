@@ -3,7 +3,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserModule } from './users/user.module';
 import { LookupTypeModule } from './lookup_types/lookup-type.module';
 import { LookupModule } from './lookups/lookup.module';
-
+import { Role } from './roles/entity/roles.entity';
+import { RolesModule } from './roles/roles.module';
 @Module({
   imports: [
     TypeOrmModule.forRoot({
@@ -20,6 +21,7 @@ import { LookupModule } from './lookups/lookup.module';
     UserModule,
     LookupTypeModule,
     LookupModule,
+    RolesModule,
   ],
 })
 export class AppModule {}
